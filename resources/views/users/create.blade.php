@@ -24,7 +24,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ url('/admin/users/create_users') }}" method="post">
+                            <form action="{{ route('create_user') }}" method="post" enctype="multipart/form-data">
                                 @csrf
 
                                 @if ($errors->any())
@@ -36,6 +36,16 @@
                                         </ul>
                                     </div>
                                 @endif
+
+                                <div class="form-group">
+                                    <label for="image">User Profile</label>
+                                    <input
+                                        class="form-control"
+                                        id="image"
+                                        name="image"
+                                        type="file"
+                                    >
+                                </div>
 
                                 <div class="form-group">
                                     <label for="text">User Name</label>

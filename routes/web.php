@@ -22,23 +22,6 @@ Route::get('/admin', function () {
     return view('master');
 });
 
-Route::get('/admin/users', function () {
-    return view('users.users');
-});
+include 'admin/users.php';
 
-Route::get('/admin/users/create', function () {
-    return view('users.create');
-});
 
-Route::post('/admin/users/create_users', function (Request $request) {
-    $validator = Validator::make($request->all(), [
-        'name' => 'required',
-        'password' => 'required',
-        'confirm_password' => 'required|same:password',
-    ]);
-    if($validator->fails()){
-        return redirect(url('/admin/users/create'))->withInput()->withErrors($validator);
-    }
-
-    dd($request->all());
-});

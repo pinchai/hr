@@ -24,7 +24,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ url('/admin/users/create') }}">
+                            <a href="{{ route('index_create') }}">
                                 <button type="button" class="btn btn-primary">
                                     <i class="fas fa-plus-circle"></i>
                                     Add
@@ -37,22 +37,41 @@
                                     <thead>
                                     <tr class="bg-primary">
                                         <th>No.</th>
-                                        <th>Profile</th>
+                                        <th width="100">Profile</th>
                                         <th>Name</th>
                                         <th>Gender</th>
                                         <th>Phone</th>
                                         <th>Email</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach([1,2,3,4,5] as $item)
+                                    @foreach($data as $item)
                                         <tr>
-                                            <td>1</td>
-                                            <td>profile</td>
-                                            <td>chai</td>
-                                            <td>male</td>
-                                            <td>099 774 967</td>
-                                            <td>pinchai.pc@gmail.com</td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                <img
+                                                    style="width: 100%"
+                                                    class="img img-thumbnail"
+                                                    src="{{ asset('images').'/'.$item->image }}"
+                                                >
+                                            </td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->gender }}</td>
+                                            <td>{{ $item->phone }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>
+                                                <a href="#">
+                                                    <button>
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </a>
+                                                <a href="{{ route('confirm_delete').'?id='.$item->id }}">
+                                                    <button class="text-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
