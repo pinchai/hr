@@ -68,12 +68,17 @@ class UsersController extends Controller
             $user->name = $request->name;
             $user->gender = $request->gender;
             $user->email = time().'@mail.com';
-            $user->password = Hash::make($request->input('password'));
+            if ($request->password != null){
+                $user->password = Hash::make($request->input('password'));
+            }
             if ($user->save()){
                 if (isset($request->image)){
+                    $old_profile = $user->profile;
                     $imageName = time().'.'.$request->image->extension();
-                    $request->image->move(public_path('images'), $imageName);
-                    $user->profile = $imageName;
+                    $old_profile == null ? $imageName : $old_profile;
+
+                    $request->image->move(public_path('images'), $old_profile);
+                    $user->profile = $old_profile;
                     $user->save();
                 }
             }

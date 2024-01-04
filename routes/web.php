@@ -24,14 +24,15 @@ Route::post('/do_login', [App\Http\Controllers\LoginController::class, 'do_login
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        return view('master');
+        return view('dashboard');
     });
 
     Route::get('/admin', function () {
-        return view('master');
+        return view('dashboard');
     });
 
     include 'admin/user.php';
+    include 'admin/clock_in.php';
 });
 
 //logout

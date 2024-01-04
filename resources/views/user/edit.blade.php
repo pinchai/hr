@@ -30,6 +30,7 @@
                                 enctype="multipart/form-data"
                             >
                                 @csrf
+                                <input type="hidden" name="id" value="{{ $data->id }}">
 
 {{--                                @if ($errors->any())--}}
 {{--                                    <div class="alert alert-danger">--}}
@@ -40,6 +41,16 @@
 {{--                                        </ul>--}}
 {{--                                    </div>--}}
 {{--                                @endif--}}
+
+                                <div class="form-group">
+                                    <label for="image">Old Profile</label>
+                                    <br>
+                                    <img
+                                        style="width: 100px"
+                                        src="{{ asset('images').'/'.$data->profile }}"
+                                        class="image img-thumbnail"
+                                    >
+                                </div>
 
                                 <div class="form-group">
                                     <label for="image">User Profile</label>
