@@ -15,13 +15,25 @@ use Illuminate\Support\Facades\Validator;
 |
 */
 
-Route::get('/', function () {
-    return view('master');
-});
-Route::get('/admin', function () {
-    return view('master');
+//login
+Route::get('/login', [App\Http\Controllers\LoginController::class, 'index'])
+    ->name('login');
+
+Route::post('/do_login', [App\Http\Controllers\LoginController::class, 'do_login'])
+    ->name('do_login');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('master');
+    });
+
+    Route::get('/admin', function () {
+        return view('master');
+    });
+
+    include 'admin/user.php';
 });
 
-include 'admin/users.php';
-
+//logout
+Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Starter</title>
+    <title>HR ST1</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -25,6 +25,9 @@
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="{{ url('/admin') }}" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{ url('/logout') }}" class="nav-link">Logout</a>
             </li>
         </ul>
 
@@ -150,11 +153,21 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                         alt="User Image">
+                    @if(auth()->user()->profile)
+                        <img
+                            src="{{ asset('images').'/'.auth()->user()->profile }}"
+                            class="img-circle elevation-2"
+                            alt="User Image">
+                    @endif
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">Sopheak</a>
+                    <a
+                        href="#"
+                        class="d-block"
+                        style="text-transform: uppercase"
+                    >
+                        {{ auth()->user()->name }}
+                    </a>
                 </div>
             </div>
 
@@ -164,23 +177,40 @@
                     data-accordion="false">
 
                     <li class="nav-item">
-                        <a href="{{ url('/admin') }}" class="nav-link {{ url()->current() == url('/admin') ? 'active' : '' }}">
+                        <a href="{{ url('/admin') }}"
+                           class="nav-link {{ url()->current() == url('/admin') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-location-arrow"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{ url('/admin/users') }}"
-                           class="nav-link {{ url()->current() == url('/admin/users') ? 'active' : '' }}"
-                        >
-                            <i class="nav-icon fas fa-users"></i>
-                            <p>
-                                Users
-                                <span class="right badge badge-danger">10</span>
-                            </p>
-                        </a>
-                    </li>
+                    @if(auth()->user()->permission != 'employee')
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/user') }}"
+                               class="nav-link {{ url()->current() == url('/admin/user') ? 'active' : '' }}"
+                            >
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Users
+                                    <span class="right badge badge-danger">10</span>
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(auth()->user()->permission == 'employee')
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/time_table') }}"
+                               class="nav-link {{ url()->current() == url('/admin/time_table') ? 'active' : '' }}"
+                            >
+                                <i class="nav-icon fas fa-clock"></i>
+                                <p>
+                                    Time Table
+                                    <span class="right badge badge-danger"></span>
+                                </p>
+                            </a>
+                        </li>
+                    @endif
 
                     <li class="nav-item menu-open1">
                         <a href="#" class="nav-link">
